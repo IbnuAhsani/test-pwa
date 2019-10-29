@@ -4,6 +4,7 @@ var filesToCache = ["/", "/index.html", "/css/style.css", "/js/main.js"];
 self.addEventListener("install", function(e) {
   e.waitUntil(
     caches.open(cacheName).then(function(cache) {
+      console.log("service worker installed");
       return cache.addAll(filesToCache);
     })
   );
@@ -12,6 +13,7 @@ self.addEventListener("install", function(e) {
 self.addEventListener("fetch", function(e) {
   e.respondWith(
     caches.match(e.request).then(function(response) {
+      console.log("service worker fetched");
       return response || fetch(e.request);
     })
   );
